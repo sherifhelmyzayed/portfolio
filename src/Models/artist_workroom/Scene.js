@@ -6,11 +6,11 @@ source: https://sketchfab.com/3d-models/artist-workroom-e0c52b6adf1245f2b36f5f49
 title: Artist workroom
 */
 
-import React, { useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei';
+import Room from './artist_workroom.glb'
 
 export function Model(props) {
-  const { nodes, materials } = useGLTF('/scene.gltf')
+  const { nodes, materials } = useGLTF(Room)
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.01}>
@@ -133,4 +133,4 @@ export function Model(props) {
   )
 }
 
-useGLTF.preload('/scene.gltf')
+useGLTF.preload(Room)

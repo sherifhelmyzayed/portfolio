@@ -1,7 +1,7 @@
 import { useRef, Suspense, useState, createContext } from "react";
 import { Canvas, extend } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, useProgress, Html } from "@react-three/drei";
-// import { Model } from "./Models/Apartments.js";
+import { Model } from "./Models/artist_workroom/Scene.js";
 
 export const HandlerContext = createContext()
 
@@ -61,6 +61,7 @@ export default function App() {
         <pointLight position={[1000, 1000, 1000]} intensity={.5} />
 
         <Suspense fallback={<Loader />}>
+          <Model />
           {/* <Model controls={controls} selectedApt={selectedApt} setSelectedApt={setSelectedApt}
           /> */}
         </Suspense>
