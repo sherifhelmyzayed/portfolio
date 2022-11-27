@@ -1,24 +1,32 @@
 import { useRef, Suspense, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, ContactShadows, useProgress, Html, Plane } from "@react-three/drei";
+import { OrbitControls, useProgress, Html, Plane } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
-import { Object3D, SpotLightHelper, Vector3 } from "three";
+import { Object3D, Vector3 } from "three";
 import { FaGithub, FaLinkedin, FaWindowClose } from 'react-icons/fa';
 import { useSpring, easings } from '@react-spring/three';
 
 import HeroPage from './HeroPage/Index'
 import ProjectPage from './HeroPage/ProjectPage'
+import { CircularProgress } from "@mui/material";
 
 
 extend({ OrbitControls });
+extend({ Suspense });
 
-const Loader = () => {
-  const { total } = useProgress()
+const Loader = (props) => {
+  const { progress } = useProgress();
 
-  let cal = total / 30 * 100;
-  console.log(cal);
+
+  console.log(progress);
+
+
   return (
-    <Html center>loading.. {Math.round(cal)} %</Html>
+    <>
+      <Html center>
+        <CircularProgress variant="determinate" value={progress} />
+      </Html>
+    </>
   )
 };
 
@@ -87,10 +95,10 @@ const Icons = () => {
     <Html className="content" rotation={[0, 0, 0]} position={[1.58, 2.6, -1.77]} transform occlude scale={.8}>
       <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
         <div  >
-          <FaGithub color="white" cursor={"pointer"} onClick={()=> window.open("https://github.com/sherifhelmyzayed", '_blank')}/>
+          <FaGithub color="white" cursor={"pointer"} onClick={() => window.open("https://github.com/sherifhelmyzayed", '_blank')} />
         </div>
         <div  >
-          <FaLinkedin color="white" cursor={"pointer"} onClick={()=> window.open("https://www.linkedin.com/in/sherif-zayed/", '_blank')}/>
+          <FaLinkedin color="white" cursor={"pointer"} onClick={() => window.open("https://www.linkedin.com/in/sherif-zayed/", '_blank')} />
         </div>
       </div>
     </Html>
@@ -193,11 +201,6 @@ export default function App() {
   const [view, setView] = useState(0);
   const controls = useRef(null);
 
-
-
-
-
-
   return (
     <>
       <Canvas
@@ -208,7 +211,6 @@ export default function App() {
       >
         <fog attach="fog" args={['#8c8c8c', 5, 20]} />
         <color attach="background" args={['#e8e8e8']} />
-
         <OrbitControls
           enablePan={true}
           enableZoom={view === 0 ? true : false}
@@ -224,30 +226,23 @@ export default function App() {
           target={[0, 1.5, 0]}
         // onChange={() => console.log(controls.current)}
         />
-
-
         <Suspense fallback={<Loader />}>
           <Model scale={1} />
           <Models />
           <Lights />
           <Icons />
-
           <Badges
             view={view}
             setView={setView}
           />
-
           <ChangeViews controls={controls} viewId={view} />
-
           <Projects
             view={view}
             setView={setView}
           />
-
         </Suspense>
-
-        {/* <ContactShadows frames={1} position={[0, -520, 0]} scale={10000} blur={1} far={9000} /> */}
       </Canvas>
+
     </>
   );
 }
