@@ -111,13 +111,18 @@ const Badges = (props) => {
   )
 }
 
-const Projects = (view, setView) => {
+const Projects = (props) => {
   return (
-    <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.5} >
-      <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+    <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.10}
+
+    >
+      <div className="wrapper"
+        onPointerDown={(e) => e.stopPropagation()
+        }
+      >
         <ProjectPage
-          view={view}
-          setView={setView}
+          view={props.view}
+          setView={props.setView}
         />
       </div>
     </Html>
@@ -199,7 +204,7 @@ export default function App() {
 
         <OrbitControls
           enablePan={true}
-          enableZoom={true}
+          enableZoom={view === 0 ? true : false}
           enableRotate={true}
           autoRotate={false}
           enableDamping={false}
@@ -210,7 +215,7 @@ export default function App() {
           ref={controls}
           maxPolarAngle={1.73}
           target={[0, 1.5, 0]}
-          // onChange={() => console.log(controls.current)}
+        // onChange={() => console.log(controls.current)}
         />
 
 
@@ -227,7 +232,10 @@ export default function App() {
 
           <ChangeViews controls={controls} viewId={view} />
 
-          <Projects />
+          <Projects
+            view={view}
+            setView={setView}
+          />
 
         </Suspense>
 

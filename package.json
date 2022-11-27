@@ -4,6 +4,9 @@
   "homepage": "https://sherif.bricksvisuals.com",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.15",
     "@react-spring/three": "^9.5.5",
     "@react-three/drei": "^9.43.3",
     "@react-three/fiber": "^8.9.1",

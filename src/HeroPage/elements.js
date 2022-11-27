@@ -25,10 +25,10 @@ export const Button = styled.div`
 
 
 export const ContainerP = styled.div`
-    width: 96px;
-    height: 120px;
+    width: 500px;
+    height: 600px;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     flex-direction:column;
     background-color: white;
