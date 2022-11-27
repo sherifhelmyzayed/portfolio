@@ -25,12 +25,12 @@ const ProjectPage = (props) => {
                 overflow: "hidden",
                 overflowY: "scroll" // added scroll
             }}>
-                <ProjectCard title="Discover Map" description="An Interactive 2D Map for real estate projects" img={MapImg} path="discover-map" tags={["React", "MUI", "Mapbox", "Airbnb"]}/>
-                <ProjectCard title="River" description="Gated-community compound visualized using in web. Prototype shows availabilty of apartments" img={RiverImg} path="river" tags={["React", "Three-JS"]}/>
-                <ProjectCard title="Interactive Apt" description="An Interactive building hologram which demonstrates 3D plan & availabilty." img={SoInteractImg} path="so-interact" tags={["React", "Three-JS"]}/>
-                <ProjectCard title="Naggar Trades" description="A portfolio website for an international foreign trades company" img={NaggarImg} path="https://www.naggarforeigntrade-eg.com" tags={["HTML", "CSS", "BootStrap", "Javascript"]}/>
-                <ProjectCard title="Reifgo" description="A Blog website for a research real estate organization that specializes in business improvements " img={ReifgoImg} path="https://www.reifgo.com" tags={["HTML", "CSS", "BootStrap", "Javascript"]}/>
-                <ProjectCard title="SavoStyle" description="A Blog website for conservative fashion brand" img={SavoStyleImg} path="https://www.savostyle.com" tags={["HTML", "CSS", "BootStrap", "Javascript"]}/>
+                <ProjectCard title="Discover Map" description="An Interactive 2D Map for real estate projects" img={MapImg} path="discover-map" tags={["React", "MUI", "Mapbox", "Airbnb", "Prototype"]}/>
+                <ProjectCard title="River" description="Gated-community compound visualized using in web. Prototype shows availabilty of apartments" img={RiverImg} path="river" tags={["React", "Three-JS", "Prototype"]}/>
+                <ProjectCard title="Interactive Apt" description="An Interactive building hologram which demonstrates 3D plan & availabilty." img={SoInteractImg} path="so-interact" tags={["React", "Three-JS", "Prototype"]}/>
+                <ProjectCard title="Naggar Trades" description="A portfolio website for an international foreign trades company" img={NaggarImg} path="https://www.naggarforeigntrade-eg.com" tags={["HTML", "CSS", "BootStrap", "Javascript", "Portfolio"]}/>
+                <ProjectCard title="Reifgo" description="A Blog website for a research real estate organization that specializes in business improvements " img={ReifgoImg} path="https://www.reifgo.com" tags={["HTML", "CSS", "BootStrap", "Javascript", "Blog", "PHP", "MySQL"]}/>
+                <ProjectCard title="SavoStyle" description="A Blog website for conservative fashion brand" img={SavoStyleImg} path="https://www.savostyle.com" tags={["HTML", "CSS", "BootStrap", "Javascript", "Blog", "PHP", "MySQL"]}/>
                 <ProjectCard title="Product media viewer" description="" img={productImg} path="product-media-viewer" tags={["HTML", "CSS", "Three.JS", "TypeScript"]}/>
                 <ProjectCard title="Volume of Interest" description="" img={volumeImg} path="volume-of-interest" tags={["HTML", "CSS", "Three.JS", "TypeScript"]}/>
             </Grid>
