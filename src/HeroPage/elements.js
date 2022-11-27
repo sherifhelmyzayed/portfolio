@@ -22,3 +22,14 @@ export const Button = styled.div`
     border-radius: 3px;
     cursor: pointer;
 `
+
+
+export const ContainerP = styled.div`
+    width: 96px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction:column;
+    background-color: white;
+`

@@ -1,10 +1,13 @@
 import { useRef, Suspense, useState } from "react";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
+import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, useProgress, Html, Plane } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
-import { Object3D, SpotLightHelper } from "three";
+import { Object3D, SpotLightHelper, Vector3 } from "three";
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { useSpring, easings } from '@react-spring/three';
+
 import HeroPage from './HeroPage/Index'
+import ProjectPage from './HeroPage/ProjectPage'
 
 
 extend({ OrbitControls });
@@ -18,7 +21,6 @@ const Loader = () => {
     <Html center>loading.. {Math.round(cal)} %</Html>
   )
 };
-
 
 const Lights = () => {
   const light = useRef();
@@ -96,23 +98,93 @@ const Icons = () => {
 }
 
 
-const Badges = (view, setView) => {
+const Badges = (props) => {
   return (
     <Html rotation={[-.74, 1.1, .69]} position={[-.44, 1.7, -.45]} transform occlude scale={.5} >
       <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
-        <HeroPage />
+        <HeroPage
+          view={props.view}
+          setView={props.setView}
+        />
       </div>
     </Html>
   )
+}
+
+const Projects = (view, setView) => {
+  return (
+    <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.5} >
+      <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+        <ProjectPage
+          view={view}
+          setView={setView}
+        />
+      </div>
+    </Html>
+  )
+}
+
+const ChangeViews = (props) => {
+  const three = useThree();
+  three.controls = props.controls.current;
+
+  const targetDirection = props.viewId === 1 ? new Vector3(-1.75, 1.998, 0.925) : new Vector3(0, 1.5, 0)
+  const targetPosition = props.viewId === 1 ? new Vector3(0.68, 2.494, 0.940) : new Vector3(4, 4, 4)
+
+
+  const controlToTargetAnimation = useSpring({
+    config: { duration: 5000, easing: easings.easeInOutExpo, delay: 500 },
+    from: {
+      lookAtX: (three.controls) ? three.controls.target.x : 0,
+      lookAtY: (three.controls) ? three.controls.target.y : 0,
+      lookAtZ: (three.controls) ? three.controls.target.z : 0,
+      positionX: (three.camera) ? three.camera.position.x : 0,
+      positionY: (three.camera) ? three.camera.position.y : 0,
+      positionZ: (three.camera) ? three.camera.position.z : 0,
+    },
+    to: {
+      lookAtX: targetDirection.x,
+      lookAtY: targetDirection.y,
+      lookAtZ: targetDirection.z,
+      positionX: targetPosition.x,
+      positionY: targetPosition.y,
+      positionZ: targetPosition.z
+    },
+    onRest: () => {
+      three.controls.enableRotate = true
+    },
+    reset: true
+  });
+
+
+  console.log(controlToTargetAnimation);
+  useFrame(() => {
+
+    if (controlToTargetAnimation.lookAtX.animation.changed) {
+      three.controls.target.x = controlToTargetAnimation.lookAtX.animation.values[0]._value;
+      three.controls.target.y = controlToTargetAnimation.lookAtY.animation.values[0]._value;
+      three.controls.target.z = controlToTargetAnimation.lookAtZ.animation.values[0]._value;
+
+      three.camera.position.x = controlToTargetAnimation.positionX.animation.values[0]._value;
+      three.camera.position.y = controlToTargetAnimation.positionY.animation.values[0]._value;
+      three.camera.position.z = controlToTargetAnimation.positionZ.animation.values[0]._value;
+    }
+  })
+
+
+
 }
 
 
 
 export default function App() {
   const [view, setView] = useState(0);
-
-
   const controls = useRef(null);
+
+
+
+
+
 
   return (
     <>
@@ -126,7 +198,7 @@ export default function App() {
         <color attach="background" args={['#e8e8e8']} />
 
         <OrbitControls
-          enablePan={false}
+          enablePan={true}
           enableZoom={true}
           enableRotate={true}
           autoRotate={false}
@@ -137,7 +209,8 @@ export default function App() {
           maxDistance={50}
           ref={controls}
           maxPolarAngle={1.73}
-          target={[0, 1, 0]}
+          target={[0, 1.5, 0]}
+          // onChange={() => console.log(controls.current)}
         />
 
 
@@ -147,14 +220,18 @@ export default function App() {
           <Lights />
           <Icons />
 
-          <Badges 
-          view={view}
-          setView={setView}
+          <Badges
+            view={view}
+            setView={setView}
           />
+
+          <ChangeViews controls={controls} viewId={view} />
+
+          <Projects />
 
         </Suspense>
 
-        <ContactShadows frames={1} position={[0, -520, 0]} scale={10000} blur={1} far={9000} />
+        {/* <ContactShadows frames={1} position={[0, -520, 0]} scale={10000} blur={1} far={9000} /> */}
       </Canvas>
     </>
   );

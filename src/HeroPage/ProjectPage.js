@@ -1,11 +1,11 @@
-import { Container, Button } from './elements'
+import { ContainerP, Button } from './elements'
 
-const Index = (props) => {
+const ProjectPage = (props) => {
 
     const { view, setView } = props;
 
     return (
-        <Container>
+        <ContainerP>
             <Button
                 onClick={() => {
                     setView(1);
@@ -19,10 +19,9 @@ const Index = (props) => {
             >
                 About
             </Button>
-
-        </Container>
+        </ContainerP>
     )
 }
 
-export default Index
+export default ProjectPage
 
