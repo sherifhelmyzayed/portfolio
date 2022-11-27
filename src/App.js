@@ -3,7 +3,7 @@ import { Canvas, extend, useFrame } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, useProgress, Html, useHelper, SpotLightShadow, Shadow, BakeShadows, Stage, Box, Plane, SpotLight } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
 import { Object3D, SpotLightHelper } from "three";
-
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 extend({ OrbitControls });
 
@@ -22,7 +22,7 @@ const Lights = () => {
   const light = useRef();
   const light1 = useRef();
   const light2 = useRef();
-  useHelper(light2, SpotLightHelper, 'cyan');
+  // useHelper(light2, SpotLightHelper, 'cyan');
 
   const target = new Object3D()
   target.position.x = -2.5
@@ -62,8 +62,6 @@ const Lights = () => {
   )
 }
 
-
-
 const Models = () => {
   return (
     <>
@@ -78,6 +76,21 @@ const Models = () => {
     </>
   )
 
+}
+
+const Icons = () => {
+  return (
+    <Html className="content" rotation={[0, 0, 0]} position={[1.58, 2.6, -1.77]} transform occlude scale={.8}>
+      <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+        <div  >
+          <FaGithub color="white" cursor={"pointer"}/>
+        </div>
+        <div  >
+          <FaLinkedin  color="white" cursor={"pointer"} />
+        </div>
+      </div>
+    </Html>
+  )
 }
 
 
@@ -123,10 +136,9 @@ export default function App() {
 
         <Suspense fallback={<Loader />}>
           <Model scale={1} />
-
-
           <Models />
           <Lights />
+          <Icons />
 
         </Suspense>
 
