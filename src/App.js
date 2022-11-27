@@ -36,12 +36,12 @@ export default function App() {
     <>
 
       <Canvas
-        camera={{ fov: 55, zoom: 1, near: 200, far: 200000, position: [0, 400, 4000], }} style={{
+        camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [220, 10, 10] }} style={{
           // height: `100vh`, width: '100vw' 
           height: '720px', width: '1200px'
         }} >
-        <fog attach="fog" args={['#17171b', 0, 100000]} />
-        <color attach="background" args={['#ffffff']} />
+        {/* <fog attach="fog" args={['#17171b', 0, 100000]} /> */}
+        <color attach="background" args={['#e8e8e8']} />
 
         <OrbitControls
           enablePan={false}
@@ -55,13 +55,30 @@ export default function App() {
           maxDistance={10000}
           ref={controls}
           maxPolarAngle={1.73}
+          onChange={() => console.log(controls.current.getDistance((0, 0, 0)))}
         />
 
-        <hemisphereLight color="#00000" groundColor="#000000" position={[-7, 15, 5]} intensity={1} />
-        <pointLight position={[1000, 1000, 1000]} intensity={.5} />
+        <mesh>
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial color={'orange'} />
+        </mesh>
+
+        {/* <hemisphereLight color="#00000" groundColor="#000000" position={[-7, 15, 5]} intensity={1} /> */}
+        {/* <pointLight position={[1000, 1000, 1000]} intensity={.5} /> */}
+
+
+        {/* const spotLight = new THREE.SpotLight(0xe47025, 2, 800, 120, 1);
+        spotLight.position.set(30, 300, 0);
+        spotLight.castShadow = true;
+        spotLight.shadow.mapSize.width = 256;
+        spotLight.shadow.mapSize.height = 256;
+        spotLight.shadow.camera.near = 1;
+        spotLight.shadow.camera.far = 600;
+        scene.add(spotLight);
+        scene.add(new THREE.SpotLightHelper(spotLight, 10)); */}
 
         <Suspense fallback={<Loader />}>
-          <Model />
+          <Model scale={10} />
           {/* <Model controls={controls} selectedApt={selectedApt} setSelectedApt={setSelectedApt}
           /> */}
         </Suspense>
