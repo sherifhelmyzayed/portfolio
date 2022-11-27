@@ -1,6 +1,6 @@
 import { useRef, Suspense, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, useProgress, Html, Plane } from "@react-three/drei";
+import { OrbitControls, useProgress, Html, Plane, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents, AdaptiveDpr } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
 import { Object3D, Vector3 } from "three";
 import { FaGithub, FaLinkedin, FaWindowClose } from 'react-icons/fa';
@@ -48,28 +48,32 @@ const Lights = () => {
     light.current.target.updateMatrixWorld()
     light1.current.target.updateMatrixWorld()
     light2.current.target.updateMatrixWorld()
-  })
-
+  }, [-1])
 
   return (
     <>
+      <AccumulativeShadows temporal frames={100} scale={10}>
+        <RandomizedLight amount={10} position={[0, 2.5, 0]} />
+      </AccumulativeShadows>
+
       <spotLight ref={light} color="#e47025" intensity={2} distance={5} angle={150} penumbra={1} position={[-0.4, 3.5, 0]} castShadow
-        shadow-mapSize-height={125}
-        shadow-mapSize-width={125}
+        shadow-mapSize-height={512}
+        shadow-mapSize-width={512}
         target={target}
       />
       <spotLight ref={light1} color="#e47025" intensity={2.5} distance={5} angle={120} penumbra={1} position={[-0.4, 3.5, -1.5]} castShadow
-        shadow-mapSize-height={125}
-        shadow-mapSize-width={125}
+        shadow-mapSize-height={512}
+        shadow-mapSize-width={512}
         target={target}
       />
 
       <spotLight ref={light2} color="#b00c3" intensity={1.7} distance={7} angle={150} penumbra={1} position={[-0.4, 2.5, 2.5]} castShadow
-        shadow-mapSize-height={125}
-        shadow-mapSize-width={125}
+        shadow-mapSize-height={512}
+        shadow-mapSize-width={512}
         target={target1}
       />
       <hemisphereLight color="#00000" groundColor="#000000" position={[0, 0, 0]} intensity={0.1} />
+
     </>
   )
 }
@@ -208,6 +212,7 @@ export default function App() {
           height: `100vh`, width: '100vw'
         }}
         shadows
+        dpr={1}
       >
         <fog attach="fog" args={['#8c8c8c', 5, 20]} />
         <color attach="background" args={['#e8e8e8']} />
@@ -240,6 +245,11 @@ export default function App() {
             view={view}
             setView={setView}
           />
+
+          <BakeShadows />
+          <Preload all />
+          <AdaptiveEvents />
+
         </Suspense>
       </Canvas>
 
