@@ -10,6 +10,13 @@ import HeroPage from './HeroPage/Index'
 import ProjectPage from './HeroPage/ProjectPage'
 import { CircularProgress } from "@mui/material";
 
+import ReactGA from 'react-ga';
+const TRACKING_ID = "UA-185916796-4"; 
+ReactGA.initialize(TRACKING_ID);
+
+// G-KJTSPTZN3P
+
+
 
 extend({ OrbitControls });
 
