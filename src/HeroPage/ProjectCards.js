@@ -1,4 +1,4 @@
-import { Grid, Typography, Card, CardContent, CardMedia, Chip, Box, Stack } from '@mui/material';
+import { Grid, Typography, Card, CardContent, CardMedia, Chip, Stack } from '@mui/material';
 
 
 const ProjectCard = (props) => {
@@ -8,7 +8,6 @@ const ProjectCard = (props) => {
         window.open(path, '_blank');
     }
 
-    console.log(tags);
     return (
         <Grid md={12} paddingX={1} marginY={3} sx={{ cursor: 'pointer', height: "50%" }}>
             <Card sx={{ maxWidth: '100%', backgroundColor: 'rgba(0,0,0,0)', height: '100%' }} onClick={() => redirect()}>

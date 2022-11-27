@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import { ContainerP, Button } from './elements'
+import { ContainerP } from './elements'
 
 import ProjectCard from './ProjectCards'
 
@@ -15,10 +15,7 @@ import volumeImg from '../images/WebApps/volumeOfInterest.png'
 
 const ProjectPage = (props) => {
 
-    const { view, setView } = props;
-
     return (
-
         <ContainerP>
             <Grid container height={"100%"} width={"100%"} style={{
                 border: "2px solid black",

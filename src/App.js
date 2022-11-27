@@ -1,6 +1,6 @@
 import { useRef, Suspense, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, useProgress, Html, Plane, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents, AdaptiveDpr } from "@react-three/drei";
+import { OrbitControls, useProgress, Html, Plane, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
 import { Object3D, Vector3 } from "three";
 import { FaGithub, FaLinkedin, FaWindowClose } from 'react-icons/fa';
@@ -12,14 +12,9 @@ import { CircularProgress } from "@mui/material";
 
 
 extend({ OrbitControls });
-extend({ Suspense });
 
 const Loader = (props) => {
   const { progress } = useProgress();
-
-
-  console.log(progress);
-
 
   return (
     <>
@@ -229,7 +224,6 @@ export default function App() {
           ref={controls}
           maxPolarAngle={1.73}
           target={[0, 1.5, 0]}
-        // onChange={() => console.log(controls.current)}
         />
         <Suspense fallback={<Loader />}>
           <Model scale={1} />
