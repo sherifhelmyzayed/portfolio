@@ -14,7 +14,6 @@ import ReactGA from 'react-ga';
 const TRACKING_ID = "UA-185916796-4"; 
 ReactGA.initialize(TRACKING_ID);
 
-// G-KJTSPTZN3P
 
 
 
@@ -55,7 +54,7 @@ const Lights = () => {
   return (
     <>
       <AccumulativeShadows temporal frames={100} scale={10}>
-        <RandomizedLight amount={10} position={[0, 2.5, 0]} />
+        <RandomizedLight amount={5} position={[0, 2.5, 0]} />
       </AccumulativeShadows>
 
       <spotLight ref={light} color="#e47025" intensity={2} distance={5} angle={150} penumbra={1} position={[-0.4, 3.5, 0]} castShadow
