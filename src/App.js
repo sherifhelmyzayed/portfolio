@@ -1,9 +1,11 @@
-import { useRef, Suspense, useState, createContext } from "react";
+import { useRef, Suspense, useState } from "react";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
-import { OrbitControls, ContactShadows, useProgress, Html, useHelper, SpotLightShadow, Shadow, BakeShadows, Stage, Box, Plane, SpotLight } from "@react-three/drei";
+import { OrbitControls, ContactShadows, useProgress, Html, Plane } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
 import { Object3D, SpotLightHelper } from "three";
-import { FaGithub, FaLinkedin } from 'react-icons/fa'
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import HeroPage from './HeroPage/Index'
+
 
 extend({ OrbitControls });
 
@@ -83,11 +85,22 @@ const Icons = () => {
     <Html className="content" rotation={[0, 0, 0]} position={[1.58, 2.6, -1.77]} transform occlude scale={.8}>
       <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
         <div  >
-          <FaGithub color="white" cursor={"pointer"}/>
+          <FaGithub color="white" cursor={"pointer"} />
         </div>
         <div  >
-          <FaLinkedin  color="white" cursor={"pointer"} />
+          <FaLinkedin color="white" cursor={"pointer"} />
         </div>
+      </div>
+    </Html>
+  )
+}
+
+
+const Badges = (view, setView) => {
+  return (
+    <Html rotation={[-.74, 1.1, .69]} position={[-.44, 1.7, -.45]} transform occlude scale={.5} >
+      <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
+        <HeroPage />
       </div>
     </Html>
   )
@@ -96,6 +109,8 @@ const Icons = () => {
 
 
 export default function App() {
+  const [view, setView] = useState(0);
+
 
   const controls = useRef(null);
 
@@ -104,19 +119,11 @@ export default function App() {
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
           height: `100vh`, width: '100vw'
-          // height: '720px', width: '1200px'
         }}
         shadows
       >
         <fog attach="fog" args={['#8c8c8c', 5, 20]} />
         <color attach="background" args={['#e8e8e8']} />
-        {/* 
-        <Shadow
-          color="black"
-          colorStop={0}
-          opacity={0.5}
-          fog={false} // Reacts to fog (default=false)
-        /> */}
 
         <OrbitControls
           enablePan={false}
@@ -139,6 +146,11 @@ export default function App() {
           <Models />
           <Lights />
           <Icons />
+
+          <Badges 
+          view={view}
+          setView={setView}
+          />
 
         </Suspense>
 
