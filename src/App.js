@@ -3,7 +3,7 @@ import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, useProgress, Html, Plane } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
 import { Object3D, SpotLightHelper, Vector3 } from "three";
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaWindowClose } from 'react-icons/fa';
 import { useSpring, easings } from '@react-spring/three';
 
 import HeroPage from './HeroPage/Index'
@@ -113,19 +113,23 @@ const Badges = (props) => {
 
 const Projects = (props) => {
   return (
-    <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.10}
-
-    >
-      <div className="wrapper"
-        onPointerDown={(e) => e.stopPropagation()
-        }
+    <>
+      <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 2.5, 0.3]} transform occlude scale={.2}>
+        <FaWindowClose color="red" onClick={()=>props.setView(0)}/>
+      </Html>
+      <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.10}
       >
-        <ProjectPage
-          view={props.view}
-          setView={props.setView}
-        />
-      </div>
-    </Html>
+        <div className="wrapper"
+          onPointerDown={(e) => e.stopPropagation()
+          }
+        >
+          <ProjectPage
+            view={props.view}
+            setView={props.setView}
+          />
+        </div>
+      </Html>
+    </>
   )
 }
 
