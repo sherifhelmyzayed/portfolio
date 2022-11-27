@@ -87,10 +87,10 @@ const Icons = () => {
     <Html className="content" rotation={[0, 0, 0]} position={[1.58, 2.6, -1.77]} transform occlude scale={.8}>
       <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
         <div  >
-          <FaGithub color="white" cursor={"pointer"} />
+          <FaGithub color="white" cursor={"pointer"} onClick={()=> window.open("https://github.com/sherifhelmyzayed", '_blank')}/>
         </div>
         <div  >
-          <FaLinkedin color="white" cursor={"pointer"} />
+          <FaLinkedin color="white" cursor={"pointer"} onClick={()=> window.open("https://www.linkedin.com/in/sherif-zayed/", '_blank')}/>
         </div>
       </div>
     </Html>
@@ -113,23 +113,26 @@ const Badges = (props) => {
 
 const Projects = (props) => {
   return (
-    <>
-      <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 2.5, 0.3]} transform occlude scale={.2}>
-        <FaWindowClose color="red" onClick={()=>props.setView(0)}/>
-      </Html>
-      <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.10}
-      >
-        <div className="wrapper"
-          onPointerDown={(e) => e.stopPropagation()
-          }
+    (props.view === 1) ? (
+      <>
+        <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 2.5, 0.3]} transform occlude scale={.2}>
+          <FaWindowClose color="red" onClick={() => props.setView(0)} cursor={"pointer"} />
+        </Html>
+        <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.10}
         >
-          <ProjectPage
-            view={props.view}
-            setView={props.setView}
-          />
-        </div>
-      </Html>
-    </>
+          <div className="wrapper"
+            onPointerDown={(e) => e.stopPropagation()
+            }
+          >
+            <ProjectPage
+              view={props.view}
+              setView={props.setView}
+            />
+          </div>
+        </Html>
+      </>
+    ) : null
+
   )
 }
 
