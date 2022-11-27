@@ -2,15 +2,10 @@ import { useRef, Suspense, useState, createContext } from "react";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, useProgress, Html, useHelper, SpotLightShadow, Shadow, BakeShadows, Stage, Box, Plane, SpotLight } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
-import { Object3D, ShadowMapType, SpotLightHelper, Vector3 } from "three";
-
-export const HandlerContext = createContext()
-
+import { Object3D, SpotLightHelper } from "three";
 
 
 extend({ OrbitControls });
-
-
 
 const Loader = () => {
   const { total } = useProgress()
@@ -21,7 +16,6 @@ const Loader = () => {
     <Html center>loading.. {Math.round(cal)} %</Html>
   )
 };
-
 
 
 const Lights = () => {
@@ -63,12 +57,10 @@ const Lights = () => {
         shadow-mapSize-width={125}
         target={target1}
       />
-      <hemisphereLight color="#00000" groundColor="#000000" position={[-7, 15, 5]} intensity={0.1} />
+      <hemisphereLight color="#00000" groundColor="#000000" position={[0, 0, 0]} intensity={0.1} />
     </>
   )
 }
-
-
 
 
 
@@ -96,7 +88,6 @@ export default function App() {
 
   return (
     <>
-
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
           height: `100vh`, width: '100vw'
@@ -129,11 +120,6 @@ export default function App() {
           target={[0, 1, 0]}
         />
 
-        {/* <Stage intensity={2} shadows="accumulative"
-        //  environment="city"
-        >
-        </Stage> */}
-
 
         <Suspense fallback={<Loader />}>
           <Model scale={1} />
@@ -144,24 +130,7 @@ export default function App() {
 
         </Suspense>
 
-
-
-        {/* <pointLight position={[1000, 1000, 1000]} intensity={.5} /> */}
-
-
-        {/* const spotLight = new THREE.SpotLight(0xe47025, 2, 800, 120, 1);
-        spotLight.position.set(30, 300, 0);
-        spotLight.castShadow = true;
-        spotLight.shadow.mapSize.width = 256;
-        spotLight.shadow.mapSize.height = 256;
-        spotLight.shadow.camera.near = 1;
-        spotLight.shadow.camera.far = 600;
-        scene.add(spotLight);
-        scene.add(new THREE.SpotLightHelper(spotLight, 10)); */}
-
-
-
-        {/* <ContactShadows frames={1} position={[0, -520, 0]} scale={10000} blur={1} far={9000} /> */}
+        <ContactShadows frames={1} position={[0, -520, 0]} scale={10000} blur={1} far={9000} />
       </Canvas>
     </>
   );
