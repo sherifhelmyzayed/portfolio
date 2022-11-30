@@ -11,7 +11,8 @@ import ProjectPage from './HeroPage/ProjectPage'
 import { CircularProgress } from "@mui/material";
 
 import ReactGA from 'react-ga';
-const TRACKING_ID = "UA-185916796-4"; 
+import SwipeHelp from "./Components/SwipeHelp.js";
+const TRACKING_ID = "UA-185916796-4";
 ReactGA.initialize(TRACKING_ID);
 
 
@@ -126,7 +127,7 @@ const Badges = (props) => {
 
 const Projects = (props) => {
   return (
-    (props.view === 1) ? (
+    (props.view) ? (
       <>
         <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 2.5, 0.3]} transform occlude scale={.2}>
           <FaWindowClose color="red" onClick={() => props.setView(0)} cursor={"pointer"} />
@@ -153,8 +154,8 @@ const ChangeViews = (props) => {
   const three = useThree();
   three.controls = props.controls.current;
 
-  const targetDirection = props.viewId === 1 ? new Vector3(-1.75, 1.998, 0.925) : new Vector3(0, 1.5, 0)
-  const targetPosition = props.viewId === 1 ? new Vector3(0.68, 2.494, 0.940) : new Vector3(4, 4, 4)
+  const targetDirection = props.viewId === 1 ? new Vector3(-1.75, 1.998, 0.925) : new Vector3(0, 1.5, 0);
+  const targetPosition = props.viewId === 1 ? new Vector3(0.68, 2.494, 0.940) : new Vector3(4, 4, 4);
 
 
   const controlToTargetAnimation = useSpring({
@@ -185,7 +186,7 @@ const ChangeViews = (props) => {
   console.log(controlToTargetAnimation);
   useFrame(() => {
 
-    if (controlToTargetAnimation.lookAtX.animation.changed) {
+    if (controlToTargetAnimation.lookAtX.animation.changed && (props.viewId === 1 || props.viewId === 0)) {
       three.controls.target.x = controlToTargetAnimation.lookAtX.animation.values[0]._value;
       three.controls.target.y = controlToTargetAnimation.lookAtY.animation.values[0]._value;
       three.controls.target.z = controlToTargetAnimation.lookAtZ.animation.values[0]._value;
@@ -208,6 +209,7 @@ export default function App() {
 
   return (
     <>
+      <SwipeHelp />
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
           height: `100vh`, width: '100vw'
