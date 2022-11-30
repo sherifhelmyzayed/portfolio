@@ -4,9 +4,8 @@ import { Container, Button } from './elements'
 
 const Index = (props) => {
 
-    const { view, setView } = props;
+    const { view, setView , setShowAbout} = props;
 
-    const [showAbout, setShowAbout] = useState(false)
 
     return (
         <Container>
@@ -19,7 +18,10 @@ const Index = (props) => {
                 Projects
             </Button>
             <Button
-                onClick={() => setView(2)}
+                onClick={() => {
+                    setView(2)
+                    setShowAbout(true)
+                }}
             >
                 About
             </Button>

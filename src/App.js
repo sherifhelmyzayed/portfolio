@@ -12,6 +12,7 @@ import { CircularProgress } from "@mui/material";
 
 import ReactGA from 'react-ga';
 import SwipeHelp from "./Components/SwipeHelp.js";
+import AboutModal from "./Components/AboutModal.js";
 const TRACKING_ID = "UA-185916796-4";
 ReactGA.initialize(TRACKING_ID);
 
@@ -119,6 +120,7 @@ const Badges = (props) => {
         <HeroPage
           view={props.view}
           setView={props.setView}
+          setShowAbout={props.setShowAbout}
         />
       </div>
     </Html>
@@ -204,11 +206,13 @@ const ChangeViews = (props) => {
 
 
 export default function App() {
-  const [view, setView] = useState(0);
+  const [view, setView] = useState(2);
+  const [showAbout, setShowAbout] = useState(false)
   const controls = useRef(null);
 
   return (
     <>
+      <AboutModal showAbout={showAbout} setShowAbout={setShowAbout} />
       <SwipeHelp />
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
@@ -241,6 +245,7 @@ export default function App() {
           <Badges
             view={view}
             setView={setView}
+            setShowAbout={setShowAbout}
           />
           <ChangeViews controls={controls} viewId={view} />
           <Projects
