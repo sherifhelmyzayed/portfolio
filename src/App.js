@@ -11,10 +11,11 @@ import ProjectPage from './HeroPage/ProjectPage'
 import { CircularProgress } from "@mui/material";
 
 import ReactGA from 'react-ga';
-const TRACKING_ID = "UA-185916796-4"; 
+import SwipeHelp from "./Components/SwipeHelp.js";
+import AboutModal from "./Components/AboutModal.js";
+const TRACKING_ID = "UA-185916796-4";
 ReactGA.initialize(TRACKING_ID);
 
-// G-KJTSPTZN3P
 
 
 
@@ -55,7 +56,7 @@ const Lights = () => {
   return (
     <>
       <AccumulativeShadows temporal frames={100} scale={10}>
-        <RandomizedLight amount={10} position={[0, 2.5, 0]} />
+        <RandomizedLight amount={5} position={[0, 2.5, 0]} />
       </AccumulativeShadows>
 
       <spotLight ref={light} color="#e47025" intensity={2} distance={5} angle={150} penumbra={1} position={[-0.4, 3.5, 0]} castShadow
@@ -119,6 +120,7 @@ const Badges = (props) => {
         <HeroPage
           view={props.view}
           setView={props.setView}
+          setShowAbout={props.setShowAbout}
         />
       </div>
     </Html>
@@ -127,7 +129,7 @@ const Badges = (props) => {
 
 const Projects = (props) => {
   return (
-    (props.view === 1) ? (
+    (props.view) ? (
       <>
         <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 2.5, 0.3]} transform occlude scale={.2}>
           <FaWindowClose color="red" onClick={() => props.setView(0)} cursor={"pointer"} />
@@ -154,8 +156,8 @@ const ChangeViews = (props) => {
   const three = useThree();
   three.controls = props.controls.current;
 
-  const targetDirection = props.viewId === 1 ? new Vector3(-1.75, 1.998, 0.925) : new Vector3(0, 1.5, 0)
-  const targetPosition = props.viewId === 1 ? new Vector3(0.68, 2.494, 0.940) : new Vector3(4, 4, 4)
+  const targetDirection = props.viewId === 1 ? new Vector3(-1.75, 1.998, 0.925) : new Vector3(0, 1.5, 0);
+  const targetPosition = props.viewId === 1 ? new Vector3(0.68, 2.494, 0.940) : new Vector3(4, 4, 4);
 
 
   const controlToTargetAnimation = useSpring({
@@ -186,7 +188,7 @@ const ChangeViews = (props) => {
   console.log(controlToTargetAnimation);
   useFrame(() => {
 
-    if (controlToTargetAnimation.lookAtX.animation.changed) {
+    if (controlToTargetAnimation.lookAtX.animation.changed && (props.viewId === 1 || props.viewId === 0)) {
       three.controls.target.x = controlToTargetAnimation.lookAtX.animation.values[0]._value;
       three.controls.target.y = controlToTargetAnimation.lookAtY.animation.values[0]._value;
       three.controls.target.z = controlToTargetAnimation.lookAtZ.animation.values[0]._value;
@@ -204,11 +206,14 @@ const ChangeViews = (props) => {
 
 
 export default function App() {
-  const [view, setView] = useState(0);
+  const [view, setView] = useState(2);
+  const [showAbout, setShowAbout] = useState(false)
   const controls = useRef(null);
 
   return (
     <>
+      <AboutModal showAbout={showAbout} setShowAbout={setShowAbout} />
+      <SwipeHelp />
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
           height: `100vh`, width: '100vw'
@@ -240,6 +245,7 @@ export default function App() {
           <Badges
             view={view}
             setView={setView}
+            setShowAbout={setShowAbout}
           />
           <ChangeViews controls={controls} viewId={view} />
           <Projects
