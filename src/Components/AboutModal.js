@@ -10,6 +10,7 @@ const AboutModal = (props) => {
             onClose={() => props.setShowAbout(false)}
             sx={{height: '100vh'}}
         >
+            
             <Box>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Welcome to my virtual room
