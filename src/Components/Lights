@@ -1,0 +1,53 @@
+import { useRef } from "react";
+import { Object3D } from "three";
+import { OrbitControls, Html, Plane, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents } from "@react-three/drei";
+import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
+
+const Lights = () => {
+  const light = useRef();
+  const light1 = useRef();
+  const light2 = useRef();
+
+  const target = new Object3D()
+  target.position.x = -2.5
+
+  const target1 = new Object3D()
+  target1.position.x = 1.5
+  target1.position.y = 2
+  target1.position.z = -2
+
+  useFrame(() => {
+    light.current.target.updateMatrixWorld()
+    light1.current.target.updateMatrixWorld()
+    light2.current.target.updateMatrixWorld()
+  }, [-1])
+
+  return (
+    <>
+      <AccumulativeShadows temporal frames={100} scale={10}>
+        <RandomizedLight amount={5} position={[0, 2.5, 0]} />
+      </AccumulativeShadows>
+
+      <spotLight ref={light} color="#e47025" intensity={2} distance={5} angle={150} penumbra={1} position={[-0.4, 3.5, 0]} castShadow
+        shadow-mapSize-height={512}
+        shadow-mapSize-width={512}
+        target={target}
+      />
+      <spotLight ref={light1} color="#e47025" intensity={2.5} distance={5} angle={120} penumbra={1} position={[-0.4, 3.5, -1.5]} castShadow
+        shadow-mapSize-height={512}
+        shadow-mapSize-width={512}
+        target={target}
+      />
+
+      <spotLight ref={light2} color="#b00c3" intensity={1.7} distance={7} angle={150} penumbra={1} position={[-0.4, 2.5, 2.5]} castShadow
+        shadow-mapSize-height={512}
+        shadow-mapSize-width={512}
+        target={target1}
+      />
+      <hemisphereLight color="#00000" groundColor="#000000" position={[0, 0, 0]} intensity={0.1} />
+
+    </>
+  )
+}
+
+export default Lights

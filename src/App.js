@@ -1,19 +1,18 @@
 import { useRef, Suspense, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, useProgress, Html, Plane, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents } from "@react-three/drei";
+import { OrbitControls, Html, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
 import { Object3D, Vector3 } from "three";
-import { FaGithub, FaLinkedin, FaWindowClose } from 'react-icons/fa';
 import { useSpring, easings } from '@react-spring/three';
 
-import HeroPage from './HeroPage/Index'
 import ProjectPage from './HeroPage/ProjectPage'
-import { CircularProgress } from "@mui/material";
 
 import SwipeHelp from "./Components/SwipeHelp.js";
-import AboutModal from "./Components/AboutModal.js";
 
-
+import Loader from "./Components/Loader.js";
+import Models from "./Components/Models";
+import Icons from "./Components/Icons.js";
+import Badges from "./Components/Badges.js";
 
 // cert url:
 // www.testdome.com/certificates/29b62c0fbccd4aa69f0e5bfb14623caa
@@ -24,17 +23,6 @@ import AboutModal from "./Components/AboutModal.js";
 
 extend({ OrbitControls });
 
-const Loader = (props) => {
-  const { progress } = useProgress();
-
-  return (
-    <>
-      <Html center>
-        <CircularProgress variant="determinate" value={progress} />
-      </Html>
-    </>
-  )
-};
 
 const Lights = () => {
   const light = useRef();
@@ -83,59 +71,16 @@ const Lights = () => {
   )
 }
 
-const Models = () => {
-  return (
-    <>
-      <Plane
-        receiveShadow
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, 0, 0]}
-        args={[1000, 1000]}
-      >
-        <meshStandardMaterial attach="material" color="white" />
-      </Plane>
-    </>
-  )
-
-}
-
-const Icons = () => {
-  return (
-    <Html className="content" rotation={[0, 0, 0]} position={[1.58, 2.6, -1.77]} transform occlude scale={.8}>
-      <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
-        <div  >
-          <FaGithub color="white" cursor={"pointer"} onClick={() => window.open("https://github.com/sherifhelmyzayed", '_blank')} />
-        </div>
-        <div  >
-          <FaLinkedin color="white" cursor={"pointer"} onClick={() => window.open("https://www.linkedin.com/in/sherif-zayed/", '_blank')} />
-        </div>
-      </div>
-    </Html>
-  )
-}
 
 
-const Badges = (props) => {
-  return (
-    <Html rotation={[-.74, 1.1, .69]} position={[-.44, 1.7, -.45]} transform occlude scale={.5} >
-      <div className="wrapper" onPointerDown={(e) => e.stopPropagation()}>
-        <HeroPage
-          view={props.view}
-          setView={props.setView}
-          setShowAbout={props.setShowAbout}
-        />
-      </div>
-    </Html>
-  )
-}
+
+
+
 
 const Projects = (props) => {
   return (
     (props.view) ? (
       <>
-        <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 2.5, 0.3]} transform occlude scale={.2}>
-          <FaWindowClose color="red" onClick={() => props.setView(0)} cursor={"pointer"} />
-        </Html>
         <Html rotation={[0, Math.PI / 2, 0]} position={[-1.5, 1.7, 1]} transform occlude scale={.10}
         >
           <div className="wrapper"
@@ -209,12 +154,10 @@ const ChangeViews = (props) => {
 
 export default function App() {
   const [view, setView] = useState(2);
-  const [showAbout, setShowAbout] = useState(false)
   const controls = useRef(null);
 
   return (
     <>
-      <AboutModal showAbout={showAbout} setShowAbout={setShowAbout} />
       <SwipeHelp />
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
@@ -240,15 +183,18 @@ export default function App() {
           target={[0, 1.5, 0]}
         />
         <Suspense fallback={<Loader />}>
+
           <Model scale={1} />
           <Models />
           <Lights />
+
           <Icons />
+
           <Badges
             view={view}
             setView={setView}
-            setShowAbout={setShowAbout}
           />
+
           <ChangeViews controls={controls} viewId={view} />
           <Projects
             view={view}
