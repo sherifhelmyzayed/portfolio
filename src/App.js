@@ -37,7 +37,6 @@ const Lights = () => {
   const light = useRef();
   const light1 = useRef();
   const light2 = useRef();
-  // useHelper(light2, SpotLightHelper, 'cyan');
 
   const target = new Object3D()
   target.position.x = -2.5
