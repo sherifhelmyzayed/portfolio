@@ -5,9 +5,9 @@ license: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 source: https://sketchfab.com/3d-models/artist-workroom-e0c52b6adf1245f2b36f5f49cddb56b9
 title: Artist workroom
 */
-
+import React, { useRef } from "react";
 import { useGLTF } from '@react-three/drei';
-import Room from './artist_workroom-old1.glb';
+import Room from './artistic_workroom2.glb';
 
 export function Model(props) {
   const { nodes, materials } = useGLTF(Room)
@@ -133,6 +133,7 @@ export function Model(props) {
               receiveShadow
               geometry={nodes.Fitment_Fitment_0.geometry}
               material={materials.Fitment}
+              position={[0.04, 0.87, 0]}
             />
           </group>
           <group
@@ -206,6 +207,7 @@ export function Model(props) {
               receiveShadow
               geometry={nodes.Paint_Pot_Paint_Pot_0.geometry}
               material={materials.material_0}
+              position={[-0.86, -0.11, 0]}
             />
           </group>
           <group
@@ -371,7 +373,238 @@ export function Model(props) {
           </group>
         </group>
       </group>
+      <group
+        position={[1.47, 0.15, 1.36]}
+        rotation={[-Math.PI / 2, 0, -Math.PI]}
+        scale={0.36}
+      >
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group position={[-2.56, 0, 0]}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Book_BookMat_0.geometry}
+              material={materials.BookMat}
+              position={[0.82, 0, -1.27]}
+              rotation={[0, -0.61, 0]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.ink_InkMat_0.geometry}
+              material={materials.InkMat}
+              position={[0.82, 0, -1.27]}
+              rotation={[0, -0.61, 0]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Line_BookMat_0.geometry}
+              material={materials.BookMat}
+              position={[0.82, 0, -1.27]}
+              rotation={[0, -0.61, 0]}
+            />
+            <group position={[2.56, 0, 0]}>
+              <mesh
+                castShadow
+                receiveShadow
+                geometry={nodes.Pilpit_PulpitMat_0.geometry}
+                material={materials.PulpitMat}
+                position={[0.36, 0, 0.2]}
+                rotation={[0, -0.61, 0]}
+              />
+            </group>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.PulpitFrame_PulpitMat_0.geometry}
+              material={materials.PulpitMat}
+              position={[0.82, 0, -1.28]}
+              rotation={[0, -0.61, 0]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Stack_BookMat_0.geometry}
+              material={materials.BookMat}
+              position={[0.82, 0, -1.27]}
+              rotation={[0, -0.61, 0]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Triangle_BookMat_0.geometry}
+              material={materials.BookMat}
+              position={[0.82, 0, -1.27]}
+              rotation={[0, -0.61, 0]}
+            />
+          </group>
+        </group>
+      </group>
+      <group
+        position={[-1.38, 1.96, 0.8]}
+        rotation={[-1.62, 0, 0]}
+        scale={0.01}
+      >
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group rotation={[0, Math.PI / 2, 0]}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Box046_Frame_0.geometry}
+              material={materials.Frame}
+              position={[-8.79, 5.57, -0.05]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#25_0"].geometry}
+              material={materials.Material_25}
+              position={[-8.79, 5.57, -0.05]}
+              rotation={[0, 0, -Math.PI]}
+              scale={[-1, 1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#350_0"].geometry}
+              material={materials["Material_350.001"]}
+              position={[-8.79, 5.57, -0.05]}
+              rotation={[0, 0, -Math.PI]}
+              scale={[-1, 1, 1]}
+            />
+          </group>
+        </group>
+      </group>
+      <group
+        position={[-1.39, 1.97, 0.31]}
+        rotation={[-1.56, 0, 0]}
+        scale={0.01}
+      >
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group rotation={[0, Math.PI / 2, 0]}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Box046_Frame_0001.geometry}
+              material={materials.Frame}
+              position={[-2.84, 9.14, 0.22]}
+              rotation={[0, 0, -Math.PI]}
+              scale={[-1, 1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#25_0001"].geometry}
+              material={materials.Material_25}
+              position={[-2.84, 9.14, 0.22]}
+              rotation={[0, 0, -Math.PI]}
+              scale={[-1, 1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#26_0001"].geometry}
+              material={materials.Material_26}
+              position={[-2.84, 9.14, 0.22]}
+              rotation={[0, 0, -Math.PI]}
+              scale={[-1, 1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#350_0001"].geometry}
+              material={materials["Material_350.002"]}
+              position={[-2.84, 9.14, 0.22]}
+              rotation={[0, 0, -Math.PI]}
+              scale={[-1, 1, 1]}
+            />
+          </group>
+        </group>
+      </group>
+      <group
+        position={[-1.38, 1.3, 0.57]}
+        rotation={[-1.56, 0, 0]}
+        scale={0.01}
+      >
+        <group rotation={[Math.PI / 2, 0, 0]}>
+          <group rotation={[0, Math.PI / 2, 0]}>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Box046_Frame_0002.geometry}
+              material={materials.Frame}
+              position={[25.64, -0.25, 0]}
+              rotation={[0, 0, 0.04]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Box046_Frame_0003.geometry}
+              material={materials.Frame}
+              position={[-37.94, 0.37, 0]}
+              rotation={[0, 0, -0.03]}
+              scale={[1, -1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#25_0002"].geometry}
+              material={materials.Material_25}
+              position={[49.2, 2.06, 0]}
+              rotation={[0, 0, 3.1]}
+              scale={[-1, 1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#25_0003"].geometry}
+              material={materials.Material_25}
+              position={[-37.94, 0.37, 0]}
+              rotation={[0, 0, -0.03]}
+              scale={[1, -1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#26_0003"].geometry}
+              material={materials.Material_26}
+              position={[49.2, 2.06, 0]}
+              rotation={[0, 0, 3.1]}
+              scale={[-1, 1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#26_0004"].geometry}
+              material={materials.Material_26}
+              position={[-37.94, 0.37, 0]}
+              rotation={[0, 0, -0.03]}
+              scale={[1, -1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#350_0003"].geometry}
+              material={materials.Material_350}
+              position={[-37.94, 0.37, 0]}
+              rotation={[0, 0, -0.03]}
+              scale={[1, -1, 1]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["Box046_Material_#350_0002"].geometry}
+              material={materials["Material_350.003"]}
+              position={[49.2, 2.06, 0]}
+              rotation={[0, 0, 3.1]}
+              scale={[-1, 1, 1]}
+            />
+          </group>
+        </group>
+      </group>
     </group>
+
   )
 }
 

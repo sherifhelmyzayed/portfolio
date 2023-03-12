@@ -10,12 +10,15 @@ import HeroPage from './HeroPage/Index'
 import ProjectPage from './HeroPage/ProjectPage'
 import { CircularProgress } from "@mui/material";
 
-import ReactGA from 'react-ga';
 import SwipeHelp from "./Components/SwipeHelp.js";
 import AboutModal from "./Components/AboutModal.js";
-const TRACKING_ID = "UA-185916796-4";
-ReactGA.initialize(TRACKING_ID);
 
+
+
+// cert url:
+// www.testdome.com/certificates/29b62c0fbccd4aa69f0e5bfb14623caa
+// https://coursera.org/verify/QWFN4BPELU6Q
+// https://coursera.org/verify/U9QFSWFUR8T4
 
 
 
