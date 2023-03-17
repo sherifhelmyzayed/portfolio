@@ -1,14 +1,15 @@
 import { useRef, Suspense, useState } from "react";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, Html, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents } from "@react-three/drei";
+import { OrbitControls, Html, BakeShadows, AccumulativeShadows, RandomizedLight, Preload, AdaptiveEvents, ScrollControls, useScroll } from "@react-three/drei";
 import { Model } from "./Models/artist_workroom/Scene.js";
 import { Object3D, Vector3 } from "three";
-import { useSpring, easings } from '@react-spring/three';
+// import { useSpring, easings } from '@react-spring/three';
 
 import ProjectPage from './HeroPage/ProjectPage'
 
 import SwipeHelp from "./Components/SwipeHelp.js";
 
+import Scroll from "./components/Scroller";
 import Loader from "./Components/Loader.js";
 import Models from "./Components/Models";
 import Icons from "./Components/Icons.js";
@@ -21,7 +22,58 @@ import Badges from "./Components/Badges.js";
 
 
 
-extend({ OrbitControls });
+// extend({ OrbitControls });
+
+
+// const ChangeViews = (props) => {
+//   const three = useThree();
+//   three.controls = props.controls.current;
+
+//   const targetDirection = props.viewId === 1 ? new Vector3(-1.75, 1.998, 0.925) : new Vector3(0, 1.5, 0);
+//   const targetPosition = props.viewId === 1 ? new Vector3(0.68, 2.494, 0.940) : new Vector3(4, 4, 4);
+
+
+//   const controlToTargetAnimation = useSpring({
+//     config: { duration: 5000, easing: easings.easeInOutExpo, delay: 500 },
+//     from: {
+//       lookAtX: (three.controls) ? three.controls.target.x : 0,
+//       lookAtY: (three.controls) ? three.controls.target.y : 0,
+//       lookAtZ: (three.controls) ? three.controls.target.z : 0,
+//       positionX: (three.camera) ? three.camera.position.x : 0,
+//       positionY: (three.camera) ? three.camera.position.y : 0,
+//       positionZ: (three.camera) ? three.camera.position.z : 0,
+//     },
+//     to: {
+//       lookAtX: targetDirection.x,
+//       lookAtY: targetDirection.y,
+//       lookAtZ: targetDirection.z,
+//       positionX: targetPosition.x,
+//       positionY: targetPosition.y,
+//       positionZ: targetPosition.z
+//     },
+//     onRest: () => {
+//       three.controls.enableRotate = true
+//     },
+//     reset: true
+//   });
+
+
+//   console.log(controlToTargetAnimation);
+//   useFrame(() => {
+
+//     if (controlToTargetAnimation.lookAtX.animation.changed && (props.viewId === 1 || props.viewId === 0)) {
+//       three.controls.target.x = controlToTargetAnimation.lookAtX.animation.values[0]._value;
+//       three.controls.target.y = controlToTargetAnimation.lookAtY.animation.values[0]._value;
+//       three.controls.target.z = controlToTargetAnimation.lookAtZ.animation.values[0]._value;
+
+//       three.camera.position.x = controlToTargetAnimation.positionX.animation.values[0]._value;
+//       three.camera.position.y = controlToTargetAnimation.positionY.animation.values[0]._value;
+//       three.camera.position.z = controlToTargetAnimation.positionZ.animation.values[0]._value;
+//     }
+//   })
+// }
+
+// CAMERA ANIMATION HANDLER 
 
 
 const Lights = () => {
@@ -71,12 +123,6 @@ const Lights = () => {
   )
 }
 
-
-
-
-
-
-
 const Projects = (props) => {
   return (
     (props.view) ? (
@@ -99,55 +145,56 @@ const Projects = (props) => {
   )
 }
 
-const ChangeViews = (props) => {
+const CameraTargetAnimation = () => {
+
   const three = useThree();
-  three.controls = props.controls.current;
+  const camera = three.camera;
+  const scroll = useScroll();
 
-  const targetDirection = props.viewId === 1 ? new Vector3(-1.75, 1.998, 0.925) : new Vector3(0, 1.5, 0);
-  const targetPosition = props.viewId === 1 ? new Vector3(0.68, 2.494, 0.940) : new Vector3(4, 4, 4);
+  useFrame(({ clock, mouse }) => {
 
+  //   const deltaClamp = 1 - THREE.MathUtils.clamp(scroll.delta * 250, 0, 1);
+  //   const t = clock.getElapsedTime()
 
-  const controlToTargetAnimation = useSpring({
-    config: { duration: 5000, easing: easings.easeInOutExpo, delay: 500 },
-    from: {
-      lookAtX: (three.controls) ? three.controls.target.x : 0,
-      lookAtY: (three.controls) ? three.controls.target.y : 0,
-      lookAtZ: (three.controls) ? three.controls.target.z : 0,
-      positionX: (three.camera) ? three.camera.position.x : 0,
-      positionY: (three.camera) ? three.camera.position.y : 0,
-      positionZ: (three.camera) ? three.camera.position.z : 0,
-    },
-    to: {
-      lookAtX: targetDirection.x,
-      lookAtY: targetDirection.y,
-      lookAtZ: targetDirection.z,
-      positionX: targetPosition.x,
-      positionY: targetPosition.y,
-      positionZ: targetPosition.z
-    },
-    onRest: () => {
-      three.controls.enableRotate = true
-    },
-    reset: true
-  });
+  //   /////////        Desktop camera animations
+  //   if (windowWidth > 500) {
+
+  //     camera.position.z = THREE.MathUtils.lerp(
+  //       camera.position.z,
+  //       (-Math.cos((scroll.offset - .5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 2 * deltaClamp - (mouse.x / 2) - ((Math.cos(t)) / 6)),
+  //       0.05
+  //     );
+
+  //     camera.rotation.y = THREE.MathUtils.lerp(
+  //       camera.rotation.y,
+  //       -Math.PI / 2 + (Math.cos((scroll.offset - .5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 0.1 * deltaClamp) - (mouse.x / 50),
+  //       0.05
+  //     );
+  //     camera.position.y = THREE.MathUtils.lerp(camera.position.y, (mouse.y / 3) - ((Math.sin(t)) / 4), 0.05);
+  //   }
 
 
-  console.log(controlToTargetAnimation);
-  useFrame(() => {
+  //   ///////     Mobile camera animations
+  //   else {
 
-    if (controlToTargetAnimation.lookAtX.animation.changed && (props.viewId === 1 || props.viewId === 0)) {
-      three.controls.target.x = controlToTargetAnimation.lookAtX.animation.values[0]._value;
-      three.controls.target.y = controlToTargetAnimation.lookAtY.animation.values[0]._value;
-      three.controls.target.z = controlToTargetAnimation.lookAtZ.animation.values[0]._value;
+  //     camera.position.z = THREE.MathUtils.lerp(
+  //       camera.position.z
+  //       , (-Math.cos((scroll.offset - 0.5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 2.9 * deltaClamp) - ((Math.cos(t)) / 6)
+  //       , 0.2
+  //     );
 
-      three.camera.position.x = controlToTargetAnimation.positionX.animation.values[0]._value;
-      three.camera.position.y = controlToTargetAnimation.positionY.animation.values[0]._value;
-      three.camera.position.z = controlToTargetAnimation.positionZ.animation.values[0]._value;
-    }
+  //     camera.rotation.y = THREE.MathUtils.lerp(
+  //       camera.rotation.y,
+  //       -Math.PI / 2 + (Math.cos((scroll.offset - 0.5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 0.12 * deltaClamp),
+  //       0.2
+  //     );
+
+  //     camera.position.y = THREE.MathUtils.lerp(camera.position.y, ((Math.sin(t)) / 4), 0.05);
+
+  //   }
   })
 
-
-
+  return null
 }
 
 
@@ -157,7 +204,15 @@ export default function App() {
   const controls = useRef(null);
 
   return (
-    <>
+    <Scroll >
+      <span
+        className="scroll-magnet"
+        style={{
+          height: "0px",
+          width: "0px",
+          visibility: "hidden",
+        }}
+      ></span>
       <SwipeHelp />
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
@@ -182,6 +237,11 @@ export default function App() {
           maxPolarAngle={1.73}
           target={[0, 1.5, 0]}
         />
+        <ScrollControls eps={0.001} damping={0.5} pages={14} distance={1.5}>
+          <CameraTargetAnimation />
+
+        </ScrollControls>
+
         <Suspense fallback={<Loader />}>
 
           <Model scale={1} />
@@ -195,11 +255,11 @@ export default function App() {
             setView={setView}
           />
 
-          <ChangeViews controls={controls} viewId={view} />
-          <Projects
+          {/* <ChangeViews controls={controls} viewId={view} /> */}
+          {/* <Projects
             view={view}
             setView={setView}
-          />
+          /> */}
 
           <BakeShadows />
           <Preload all />
@@ -207,7 +267,7 @@ export default function App() {
 
         </Suspense>
       </Canvas>
+    </Scroll>
 
-    </>
   );
 }
