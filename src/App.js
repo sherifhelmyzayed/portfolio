@@ -9,7 +9,6 @@ import ProjectPage from './HeroPage/ProjectPage'
 
 import SwipeHelp from "./Components/SwipeHelp.js";
 
-import Scroll from "./components/Scroller";
 import Loader from "./Components/Loader.js";
 import Models from "./Components/Models";
 import Icons from "./Components/Icons.js";
@@ -152,46 +151,47 @@ const CameraTargetAnimation = () => {
   const scroll = useScroll();
 
   useFrame(({ clock, mouse }) => {
+    // console.log(scroll.offset);
 
-  //   const deltaClamp = 1 - THREE.MathUtils.clamp(scroll.delta * 250, 0, 1);
-  //   const t = clock.getElapsedTime()
+    //   const deltaClamp = 1 - THREE.MathUtils.clamp(scroll.delta * 250, 0, 1);
+    //   const t = clock.getElapsedTime()
 
-  //   /////////        Desktop camera animations
-  //   if (windowWidth > 500) {
+    //   /////////        Desktop camera animations
+    //   if (windowWidth > 500) {
 
-  //     camera.position.z = THREE.MathUtils.lerp(
-  //       camera.position.z,
-  //       (-Math.cos((scroll.offset - .5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 2 * deltaClamp - (mouse.x / 2) - ((Math.cos(t)) / 6)),
-  //       0.05
-  //     );
+    //     camera.position.z = THREE.MathUtils.lerp(
+    //       camera.position.z,
+    //       (-Math.cos((scroll.offset - .5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 2 * deltaClamp - (mouse.x / 2) - ((Math.cos(t)) / 6)),
+    //       0.05
+    //     );
 
-  //     camera.rotation.y = THREE.MathUtils.lerp(
-  //       camera.rotation.y,
-  //       -Math.PI / 2 + (Math.cos((scroll.offset - .5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 0.1 * deltaClamp) - (mouse.x / 50),
-  //       0.05
-  //     );
-  //     camera.position.y = THREE.MathUtils.lerp(camera.position.y, (mouse.y / 3) - ((Math.sin(t)) / 4), 0.05);
-  //   }
+    //     camera.rotation.y = THREE.MathUtils.lerp(
+    //       camera.rotation.y,
+    //       -Math.PI / 2 + (Math.cos((scroll.offset - .5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 0.1 * deltaClamp) - (mouse.x / 50),
+    //       0.05
+    //     );
+    //     camera.position.y = THREE.MathUtils.lerp(camera.position.y, (mouse.y / 3) - ((Math.sin(t)) / 4), 0.05);
+    //   }
 
 
-  //   ///////     Mobile camera animations
-  //   else {
+    //   ///////     Mobile camera animations
+    //   else {
 
-  //     camera.position.z = THREE.MathUtils.lerp(
-  //       camera.position.z
-  //       , (-Math.cos((scroll.offset - 0.5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 2.9 * deltaClamp) - ((Math.cos(t)) / 6)
-  //       , 0.2
-  //     );
+    //     camera.position.z = THREE.MathUtils.lerp(
+    //       camera.position.z
+    //       , (-Math.cos((scroll.offset - 0.5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 2.9 * deltaClamp) - ((Math.cos(t)) / 6)
+    //       , 0.2
+    //     );
 
-  //     camera.rotation.y = THREE.MathUtils.lerp(
-  //       camera.rotation.y,
-  //       -Math.PI / 2 + (Math.cos((scroll.offset - 0.5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 0.12 * deltaClamp),
-  //       0.2
-  //     );
+    //     camera.rotation.y = THREE.MathUtils.lerp(
+    //       camera.rotation.y,
+    //       -Math.PI / 2 + (Math.cos((scroll.offset - 0.5 / evenNumberOfProjects) * Math.PI * evenNumberOfProjects) * 0.12 * deltaClamp),
+    //       0.2
+    //     );
 
-  //     camera.position.y = THREE.MathUtils.lerp(camera.position.y, ((Math.sin(t)) / 4), 0.05);
+    //     camera.position.y = THREE.MathUtils.lerp(camera.position.y, ((Math.sin(t)) / 4), 0.05);
 
-  //   }
+    //   }
   })
 
   return null
@@ -204,15 +204,7 @@ export default function App() {
   const controls = useRef(null);
 
   return (
-    <Scroll >
-      <span
-        className="scroll-magnet"
-        style={{
-          height: "0px",
-          width: "0px",
-          visibility: "hidden",
-        }}
-      ></span>
+    <>
       <SwipeHelp />
       <Canvas
         camera={{ fov: 55, zoom: 1, near: 1, far: 10000, position: [4, 4, 4] }} style={{
@@ -223,7 +215,7 @@ export default function App() {
       >
         <fog attach="fog" args={['#8c8c8c', 5, 20]} />
         <color attach="background" args={['#e8e8e8']} />
-        <OrbitControls
+        {/* <OrbitControls
           enablePan={true}
           enableZoom={view === 0 ? true : false}
           enableRotate={true}
@@ -236,10 +228,9 @@ export default function App() {
           ref={controls}
           maxPolarAngle={1.73}
           target={[0, 1.5, 0]}
-        />
-        <ScrollControls eps={0.001} damping={0.5} pages={14} distance={1.5}>
+        /> */}
+        <ScrollControls eps={0.001} damping={0.5} pages={5} distance={1.5}>
           <CameraTargetAnimation />
-
         </ScrollControls>
 
         <Suspense fallback={<Loader />}>
@@ -267,7 +258,6 @@ export default function App() {
 
         </Suspense>
       </Canvas>
-    </Scroll>
-
+    </>
   );
 }
